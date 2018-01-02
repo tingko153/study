@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		 * { margin:0; padding:0; }
+		 ul li, ol li {list-style:none;}
+		
+		#input { margin:10px; }
+		#todoList { border:1px solid #000; padding:10px; margin:10px; }
+	</style>
+</head>
+<body>
+	<h1>TODO LIST</h1>
+	<div id="input"><input type="text" id="txt" /> <button data-type="add">add</button> <button data-type="delete">delete</button></div>
+	<div id="todoList">
+		<ul>
+			<li><input type="checkbox" id="chk1"/><label for="chk1">sdfsdfsdf</label></li>
+		</ul>
+	</div>
+
+	<script>
+		(function() {
+			let input = document.getElementById('input');
+
+			input.addEventListener('click', (e) => {
+				let target = e.target,
+					dataType = target.getAttribute('data-type'),
+					callbackFunction = callback[dataType];
+
+				if(dataType) callbackFunction();
+			});
+
+			let callback = {
+				'add': () => {
+					console.log('add');
+				},
+				'delete': () => {
+					console.log('delete');	
+				}
+			}
+
+		}());
+	</script>
+</body>
+</html>
