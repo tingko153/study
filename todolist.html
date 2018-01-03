@@ -21,7 +21,7 @@
 
 	<script>
 		(() => {
-			let input = document.getElementById('input');
+			const input = document.getElementById('input');
 
 			input.addEventListener('click', (e) => {
 				let target = e.target,
@@ -32,10 +32,12 @@
 			});
 
 			let callback = {
-				'add': () => {
-					console.log('add');
+				count: 0,
+				add() {
+					console.log(callback.count)
+					console.log('add' + this.count);	
 				},
-				'delete': () => {
+				delete() {
 					console.log('delete');	
 				}
 			}
