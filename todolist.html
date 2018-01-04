@@ -12,6 +12,7 @@
 		#todoList li .del { display:none; float:right; margin-left:10px; border:0; background:none; }
 		#todoList li:hover { background:skyblue; }
 		#todoList li:hover .del { display:block; }
+		#todoList li input:checked + label { color:#666; text-decoration:line-through; }
 	</style>
 </head>
 <body>
@@ -30,7 +31,8 @@
 					this.eventHandler();
 				},
 				eventHandler() {
-					const input = document.getElementById('input');
+					const input = document.getElementById('input'),
+							txt = document.getElementById('txt');
 
 					input.addEventListener('click', (e) => {
 						let target = e.target,
@@ -40,11 +42,21 @@
 						if(dataType) callbackFunction.bind(this)();
 					});
 
-					this.list.addEventListener('click', (e) => {
-						let target = e.target;
-						
-						if(target.nodeName == 'BUTTON') this.delete(target);
+					txt.addEventListener('keydown', (e)=> {
+						if(e.keyCode == 13) this.add(); 		// enter
+					});
 
+					this.list.addEventListener('click', (e) => {
+						let target = e.target,
+							li = findPath(e.path, 'LI'),
+							n = this.getCount(li);
+
+						if(target.nodeName == 'BUTTON') this.delete(target);
+						if(target.nodeName == 'INPUT' || target.nodeName == 'LABEL') {
+							if( target.checked !== undefined ) {
+								this.todos[n].complete = target.checked;
+							}
+						}
 
 					});
 				},
@@ -56,10 +68,10 @@
 						console.log('값 입력');
 					}else {
 						this.count++;
-						node.setAttribute('data-count', this.count);
-						node.innerHTML = '<label><input type="checkbox" />' + val.value + '</label><button data-type="delete" class="del">X</button>';
+						node.innerHTML = '<input type="checkbox" id="c' + this.count + '"/><label for="c' + this.count + '" data-id="' + this.count + '">' + val.value + '</label><button data-type="delete" class="del">X</button>';
 						this.list.appendChild(node);
 					}
+
 
 					this.setTodos(val.value);
 					val.value = '';
@@ -69,24 +81,37 @@
 						targetCount = this.getCount(el);
 
 					el.remove();
-					// console.log(this.todos);
-				},
-				setTodos(txt) {
-					this.todos[this.count-1] = {
-						value: txt,
-						complete: false
-					};
-					
+					this.todos.splice(targetCount, 1);
+
 					console.log(this.todos);
 				},
+				setTodos(txt) {
+					this.todos.push({
+						id: this.count,
+						value: txt,
+						complete: false
+					});
+
+					// console.log(this.todos);
+				},
 				getCount(el) {
-					return el.getAttribute('data-count');
+					return Array.prototype.indexOf.call(el.parentNode.childNodes, el);
 				}
 			};
 
 			todo.init();
 
 
+			function findPath(path, el) {
+				let node;
+				path.forEach(function(val, idx) {
+					if(val.nodeName == el) {
+						node = val;
+					}
+				});
+
+				return node;
+			}
 
 		})();
 	</script>
