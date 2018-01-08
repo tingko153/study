@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
 	<title></title>
 	<style>
 		 * { margin:0; padding:0; }
@@ -21,13 +22,14 @@
 		<div id="input"><input type="text" id="txt" /> <button type="submit" data-type="add">add</button> </div>
 		<ul id="todoList"></ul>
 	</div>
+	<div id="appendDiv"></div>
 	<script>
 		(() => {
 			const todo = {
+				todos: [],
+				count: 0,
+				list: document.getElementById('todoList'),
 				init() {
-					this.todos = [],
-					this.count = 0,
-					this.list = document.getElementById('todoList'),
 					this.eventHandler();
 				},
 				eventHandler() {
@@ -51,7 +53,9 @@
 							li = findPath(e.path, 'LI'),
 							n = this.getCount(li);
 
-						if(target.nodeName == 'BUTTON') this.delete(target);
+						if(target.nodeName == 'BUTTON') {
+							this.delete(target);
+						}
 						if(target.nodeName == 'INPUT' || target.nodeName == 'LABEL') {
 							if( target.checked !== undefined ) {
 								this.todos[n].complete = target.checked;
@@ -64,7 +68,7 @@
 					const node = document.createElement('li'),
 							val = document.getElementById('txt');
 
-					if( val.value == '' ) {
+					if(!val.value) {
 						console.log('값 입력');
 					}else {
 						this.count++;
@@ -102,9 +106,9 @@
 			todo.init();
 
 
-			let findPath = (path, el) => {
+			const findPath = (path, el) => {
 				let node;
-				path.forEach(function(val, idx) {
+				path.forEach((val, idx) => {
 					if(val.nodeName == el) {
 						node = val;
 					}
