@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Car {
+            constructor(name) {
+                this.name = name;
+                this.type = 'Car';
+            }
+            getName() {
+                return this.name;
+            }
+        }
+
+        let car = new Car('my car');
+        console.log(car.getName());
+
+
+        class SUV extends Car {
+            constructor(name) {
+                super(name);
+                this.type = 'SUV';
+            }
+        }
+
+        let suv = new SUV('my suv');
+
+        console.log(suv instanceof SUV);
+        console.log(suv instanceof Car);
+        console.log(suv.getName());
+        console.log(SUV);
+    </script>
+</body>
+</html>
