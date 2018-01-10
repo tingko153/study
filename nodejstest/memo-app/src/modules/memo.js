@@ -56,7 +56,7 @@ export default handleActions({
 		type: GET_PREVIOUS_MEMO,
 		onSuccess: (state, action) => {
 			const data = state.get('data');
-			return state.set('data', data.concat(fromJS.payload.data))
+			return state.set('data', data.concat(fromJS(action.payload.data)))
 		}
 	})
 }, initialState);

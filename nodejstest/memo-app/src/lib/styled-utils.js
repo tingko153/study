@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css, keyframes } from 'styled-components';
 
 export const media = ({
 	desktop: (...args) => css`
@@ -17,3 +17,26 @@ export const media = ({
 		}
 	`,
 });
+
+export const transitions = {
+    stretchOut: keyframes`
+        0%{
+            opacity: 0;
+            transform: scale(0.25,0.25);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1, 1);
+        }
+    `,
+    shrinkIn: keyframes`
+        0% {
+            opacity: 1;
+            transform: scale(1,1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.25,0.25);
+        }
+    `
+}

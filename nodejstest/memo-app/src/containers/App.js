@@ -4,6 +4,7 @@ import Layout from 'components/Layout';
 import WriteMemo from './WriteMemo';
 import MemoListContainer from './MemoListContainer';
 import MemoViewerContainer from './MemoViewerContainer';
+import Spinner from 'components/Spinner';
 
 import * as memoActions from 'modules/memo';
 import { connect } from 'react-redux';
@@ -11,6 +12,7 @@ import { bindActionCreators } from 'redux';
 
 
 class App extends Component {
+    endCursor = 0
 	async componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
 
@@ -28,7 +30,12 @@ class App extends Component {
         const { innerHeight } = window;
 
         if(clientHeight - innerHeight - scrollTop < 100) {
-            console.log('end');
+            const { endCursor, MemoActions } = this.props;
+
+            if( !endCursor || this.endCursor === endCursor ) return;
+            this.endCursor = endCursor;
+
+            MemoActions.getPreviousMemo(endCursor);
         }
     }
     getRecentMemo = () => {
@@ -40,12 +47,14 @@ class App extends Component {
         }, 5000);
     }
     render() {
+        const { pending } = this.props;
         return (
             <Layout>
                 <Header />
                 <Layout.Main>
                 	<WriteMemo />
                 	<MemoListContainer />
+                    <Spinner visible={pending['memo/GET_INITIAL_MEMO'] || pending['memo/GET_PREVIOUS_MEMO']} />
                 </Layout.Main>
                 <MemoViewerContainer />
             </Layout>
@@ -55,7 +64,9 @@ class App extends Component {
 
 export default connect(
 	(state) => ({
-        cursor: state.memo.getIn(['data', 0, 'id'])
+        cursor: state.memo.getIn(['data', 0, 'id']),
+        endCursor: state.memo.getIn(['data', state.memo.get('data').size - 1, 'id']),
+        pending: state.pender.pending
     }),
 	(dispatch) => ({
 		MemoActions: bindActionCreators(memoActions, dispatch)
