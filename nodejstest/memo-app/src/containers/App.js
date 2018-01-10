@@ -3,6 +3,7 @@ import Header from 'components/Header';
 import Layout from 'components/Layout';
 import WriteMemo from './WriteMemo';
 import MemoListContainer from './MemoListContainer';
+import MemoViewerContainer from './MemoViewerContainer';
 
 import * as memoActions from 'modules/memo';
 import { connect } from 'react-redux';
@@ -11,6 +12,8 @@ import { bindActionCreators } from 'redux';
 
 class App extends Component {
 	async componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+
 		const { MemoActions } = this.props;
         try {
             await MemoActions.getInitialMemo();
@@ -18,7 +21,16 @@ class App extends Component {
         }catch(e) {
             console.log(e);
         }
-	}
+    }
+    handleScroll = (e) => {
+        const { clientHeight } = document.body;
+        const { scrollTop } = document.documentElement;
+        const { innerHeight } = window;
+
+        if(clientHeight - innerHeight - scrollTop < 100) {
+            console.log('end');
+        }
+    }
     getRecentMemo = () => {
         const { MemoActions, cursor } = this.props;
         MemoActions.getRecentMemo(cursor ? cursor : 0);
@@ -35,6 +47,7 @@ class App extends Component {
                 	<WriteMemo />
                 	<MemoListContainer />
                 </Layout.Main>
+                <MemoViewerContainer />
             </Layout>
         );
     }

@@ -18,19 +18,19 @@ export const closeViewer = createAction(CLOSE_VIEWER);
 export const changeViewerInput = createAction(CHANGE_VIEWER_INPUT);
 
 const initialState = Map({
-	write: Map({
-		focused: false,
-		title: '',
-		body: ''
-	}),
-	memo: Map({
-		open: false,
-		info: Map({
-			id: null,
-			title: null,
-			body: null
-		})
-	})
+    write: Map({
+        focused: false,
+        title: '',
+        body: ''
+    }),
+    memo: Map({
+        open: false,
+        info: Map({
+            id: null,
+            title: null,
+            body: null
+        })
+    })
 });
 
 export default handleActions({
@@ -41,11 +41,11 @@ export default handleActions({
 		return state.setIn(['write', name], value);
 	},
 	[RESET_INPUT]: (state) => state.set('write', initialState.get('write')),
-	[OPEN_VIEWER]: (state, action) => state.setIn(['memo', 'open'], true)
-											.setIn(['memo', 'info'], action.payload),
-	[CLOSE_VIEWER]: (state, action) => state.setIn(['memo', 'open'], false),
-
-	[CHANGE_VIEWER_INPUT]: (state, action) => {
-		
-	}
+    [OPEN_VIEWER]: (state, action) => state.setIn(['memo', 'open'], true)
+                                           .setIn(['memo', 'info'], action.payload),
+    [CLOSE_VIEWER]: (state, action) => state.setIn(['memo', 'open'], false),
+    [CHANGE_VIEWER_INPUT]: (state, action) => {
+        const { name, value } = action.payload;
+        return state.setIn(['memo', 'info', name], value)
+    }
 }, initialState);
