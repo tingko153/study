@@ -5,7 +5,7 @@
     <title>my-app</title>
   </head>
   <body>
-    <div id="app">
+    <!-- <div id="app">
       {{message}}<br />
       {{message2}}
     </div>
@@ -28,6 +28,14 @@
       <input v-model="message" />
     </div>
 
+    <div id="app-6">
+        <ol>
+            <todo-item v-for="item in groceryList"
+                       v-bind:todo="item"
+                       v-bind:key="item.id">
+            </todo-item>
+          </ol>
+    </div> -->
 
     <script src="/dist/build.js"></script>
   </body>

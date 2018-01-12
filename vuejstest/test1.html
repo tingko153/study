@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <input type="text" id="input" v-model="newItem"/>
+        <button @click="addItem">click</button>
+
+        <ul>
+            <li v-for="name in list" v-text="name">{{name}}</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        var app = new Vue({
+            el: '#root',
+            data: {
+                newItem: '',
+                list: ['apple', 'banana']
+            },
+            methods: {
+                addItem() {
+                    this.list.push(this.newItem);
+                    this.newItem = '';
+                }
+            }
+            // mounted() {
+            //     document.querySelector('#button').addEventListener('click', () => {
+            //         let item = document.querySelector('#input');
+            //         app.list.push(item.value);
+            //         item.value = '';
+            //     });
+
+            // }
+        });
+
+    </script>
+</body>
+</html>
