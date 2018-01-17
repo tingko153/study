@@ -1,0 +1,18 @@
+{
+    "contacts": [
+        {
+            "no": 0,
+            "name": "seohyun",
+            "tel": "031-000-2222",
+            "address": "경기도",
+            "photo": "https://s.pstatic.net/static/www/mobile/edit/2018/0111/mobile_135630746876.JPG"
+        },
+        {
+            "no": 1,
+            "name": "seohyun1",
+            "tel": "02-111-2222",
+            "address": "서울",
+            "photo": "https://s.pstatic.net/static/www/mobile/edit/2018/0111/mobile_135630746876.JPG"
+        }
+    ]
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Vue</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+    .divider { background:skyblue; }
+  </style>
+</head>
+<body>
+  
+  <div id="example">
+    <table id="list">
+      <thead>
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>주소</th>
+          </tr>
+      </thead>
+      <tbody id="contacts">
+        <template v-for="(contact, index) in contacts">
+            <tr :key="contact.no">
+                <td>{{contact.no}}</td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.tel}}</td>
+                <td>{{contact.address}}</td>
+            </tr>
+            <tr class="divider" v-if="index % 5 === 4">
+              <td colspan="4"></td>
+            </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    var model = {
+      'pageno': 1,
+      'pagesize': 10,
+      'totalcount': 100,
+      'contacts': [
+        { 'no': 100, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 99, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 98, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 97, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 96, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 95, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 94, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 93, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 92, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 91, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' },
+        { 'no': 90, 'name': 'seohyun', 'tel': '000-0000-0000', 'address': '경기' }
+      ]
+    }
+
+    var list = new Vue({
+      el: '#example',
+      data: model
+    });
+  </script>
+</body>
+</html>

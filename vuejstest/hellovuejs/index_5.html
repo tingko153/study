@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Vue</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  
+  <div id="example">
+    금액 : <span>{{amount}}원</span>
+  </div>
+
+  <div id="ex">
+    x: <input type="text" v-model="x" /><br />
+    y: <input type="text" v-model='y' /><br />
+    덧셈 결과 : {{sum}}
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#ex',
+      data: { x: 0, y: 0 /*, sum:0*/ },
+      computed: {
+        sum: function() {
+          var result = Number(this.x) + Number(this.y);
+          if(isNaN(result)) {
+            return 0;
+          }else {
+            return result;
+          }
+        }
+      }
+      // watch: {
+      //   x: function(v) {
+      //     console.log('## x 변경');
+      //     var result = Number(v) + Number(this.y);
+      //     if( isNaN(result)) {
+      //       this.sum = 0;
+      //     }else {
+      //        this.sum = result;
+      //     }
+      //   },
+      //   y: function(v) {
+      //     console.log('## y 변경');
+      //     this.y = v;
+      //     var result = Number(this.x) + Number(v);
+      //     if( isNaN(result)) {
+      //       this.sum = 0;
+      //     }else {
+      //       this.sum = result;
+      //     }
+      //   }
+      // }
+    });
+
+
+    var cm = new Vue ({
+      el: '#example',
+      data: { amt: 1234567890 },
+      computed: {
+        amount: {
+          get: function() {
+            var s = new String('' + this.amt),
+                result = '',
+                num = 0;
+
+            for(var i=s.length-1; i>=0; i--) {
+              result = s[i] + result;
+              if(num % 3 == 2 && i !== 0) {
+                result = ',' + result;
+              }
+              num++;
+            }
+            return result;
+          },
+          set: function(amt) {
+            if( typeof(amt) === 'string' ) {
+              var result = parseInt(amt.replace(/,/g, ''));
+              if( isNaN(result) ) this.amt = 0;
+              else this.amt = result;
+            }else if( typeof(amt) === 'number') {
+              this.amt = amt;
+            }
+
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

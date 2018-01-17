@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Vue</title>
+  <script src="https://unpkg.com/vue"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  
+  <div id="todolistapp">
+    <div id="header" class="header">
+      <h2>Todo List App</h2>
+      <input type="text" id="task" placeholder="입력 후 엔터!!" v-model.trim="todo" v-on:keyup.enter="addTodo"/>
+      <span class="addbutton" v-on:click="addTodo">추가</span>
+    </div>
+    <ul id="todolist">
+      <li v-for="(a, index) in todolist" v-bind:class="checked(a.done)" v-on:click="doneToggle(index)">
+          <span>{{a.todo}}</span>
+          <span v-if="a.done">(완료)</span>
+          <span class="close" v-on:click.stop="deleteTodo(index)">&#x00d7;</span>
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#todolistapp',
+      data: {
+        todo: '',
+        todolist: [
+          { todo: '영화보기', done: false },
+          { todo: '영화보기1', done: false },
+          { todo: '영화보기2', done: false }
+        ]
+      },
+      methods: {
+        checked: function(done) {
+          if(done) return { checked: true };
+          else return { checked: false };
+        },
+        addTodo: function(e) {
+          if(this.todo !== '') {
+            this.todolist.push({
+              todo: this.todo, done: false
+            });
+            this.todo = '';
+          }
+        },
+        deleteTodo: function(index) {
+          this.todolist.splice(index, 1);
+        },
+        doneToggle: function(index) {
+          this.todolist[index].done = !this.todolist[index].done;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
